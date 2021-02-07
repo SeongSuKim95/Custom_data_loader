@@ -61,11 +61,7 @@ def check_accuracy(loader, model):
             predictions = torch.tensor([1.0 if i >= 0.5 else 0.0 for i in scores]).to(device)
             num_correct += (predictions == y).sum()
             num_samples += predictions.size(0)
-    return f"{float(num_correct)/float(num_samples)*100:.2f}"
-        print(
-            f"Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.2f}"
-        )
-    model.train()
+            print(f"Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.2f}")
 
 def train():
     model.train()
