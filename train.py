@@ -26,7 +26,7 @@ shuffle = True
 pin_memory = True
 num_workers = 1
 
-dataset = CatsAndDogsDataset("train","train_csv.csv",transform=transform)
+dataset = CatsAndDogsDataset("/home/sungsu21/Project/data/dogs_cats_data/train","train_csv.csv",transform=transform)
 train_set, validation_set = torch.utils.data.random_split(dataset,[20000,5000])
 train_loader = DataLoader(dataset=train_set, shuffle=shuffle, batch_size=batch_size,num_workers=num_workers,pin_memory=pin_memory)
 validation_loader = DataLoader(dataset=validation_set, shuffle=shuffle, batch_size=batch_size,num_workers=num_workers, pin_memory=pin_memory)
@@ -76,7 +76,7 @@ def train():
             loss = criterion(outputs, labels)
             optimizer.zero_grad()
             loss.backward()
-            optimizer.step()
+            optimizer.step() 
             loop.set_description(f"Epoch [{epoch}/{num_epochs}]")
             loop.set_postfix(loss = loss.item())
 
