@@ -69,7 +69,7 @@ num_epochs = 10
 ## Dataset, DataLoader
 # 1. Load dataset from custom dataset
 # 2. Split into train, test set
-# 3. Make Dataloader 
+# 3. Make Dataloader ``
 
 Dataset = CatsAndDogsDataset("/home/sungsu21/Project/data/dogs_cats_data/train/","/home/sungsu21/Project/data/dogs_cats_data/train_csv.csv",transform = transform)
 train_set, test_set = torch.utils.data.random_split(Dataset,[20000,5000])
@@ -85,28 +85,27 @@ model = CNN(in_channels = 3, num_classes = num_classes).to(device)
 optimizer = optim.Adam(model.parameters(), lr = learning_rate)
 criterion = nn.CrossEntropyLoss()
 
-for epoch in range(num_epochs):    
+for epoch in range(num_epochs):
+    losses = []    
     for batch_idx, (data,targets) in enumerate(train_loader):
         
         # Get data to cuda
         data = data.to(device = device)
-        targets = targets.to(device = device)
 
+        targets = targets.to(device = device).long() # cast float to long
+        
         scores = model(data)
-        loss  = criterion(targets,scores)
-
+        #print(scores.shape, targets.shape)
+        loss  = criterion(scores,targets)
+        losses.append(loss.item())
+        #backward
         optimizer.zero_grad()
         loss.backward()
-
         optimizer.step()
+    print(f'Mean loss at epoch {epoch} is {sum(losses)/len(losses):.5f}')
 
 
 def Check_Accuracy(loader,model):
-    
-    if loader.dataset.train:
-        print("Checking accuaracy on train data")
-    else:
-        print("Checking accuaracy on test data")
 
     num_correct = 0
     num_samples = 0
