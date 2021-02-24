@@ -5,7 +5,10 @@ import torch
 device = ("cuda" if torch.cuda.is_available() else "cpu")
 
 train_df = pd.DataFrame(columns=["img_path","label"])
+
 train_df["img_path"] = os.listdir("/home/sungsu21/Project/data/dogs_cats_data/train/")
+
+
 for idx, i in enumerate(os.listdir("/home/sungsu21/Project/data/dogs_cats_data/train/")):
     if "cat" in i:
         train_df["label"][idx] = 0
